@@ -1,0 +1,52 @@
+Transformer
+- Attention 매커니즘 극대화
+- 모든 단어 벡터를 동시에 입력 -> 병렬화
+    - 단어의 위치 정보 벡터 추가 제공
+    - Positional Encoding
+- 인코더 블록 6개 + 디코더 블록 6개
+- 인코더 : Multi Head (Self) Attention + Feed Forward
+- 디코더 : Multi Head (Self) Attention + Multi-Head (Encoder-Decoder) Attention + Feed Forward
+
+-----------------------------------------------------------------------------------------------------
+
+
+Self-Attention
+- 문장 자신에 대해 Attention 적용
+    - 한 단어가 문장 내 다른 단어와 어떤 관계를 가지는지
+- 쿼리, 키, 밸류 사용
+    ex) I am a student
+    - 쿼리 : I의 W
+    - 키 : I 와 (am, a, student)의 연관성 W
+    - 밸류 : (am, a, student)의 의미 W
+- 행렬단위의 병렬 계산이 가능해짐
+
+연산
+0. 가중치 행렬(q,k,v)로부터 각 단어의 벡터 추출
+1. I의 쿼리 벡터, (am, a, student)의 키 벡터 내적  
+    => Attention score
+2. 위 가중치를 각 차원의 제곱근으로 나눔
+    => 계산값 보정
+3. Softmax
+    => I와 (am, a, student)들 간의 관계비율
+4. 3.의 각 출력과 밸류 벡터 곱
+
+-----------------------------------------------------------------------------------------------------
+
+
+Multi-head Attention
+- 여러개의 Attention 매커니즘을 동시에 병렬 실행
+
+FFNN(Feed forward neural network)
+- 은닉층 차원이 늘었다가 다시 줄어드는 단순 신경망
+
+Masked Self-Attention
+- Auto Regressive하게 생성
+	- 왼쪽에 있는 단어정보만을 고려하도록
+- 타겟 단어 뒤(오른쪽)의 단어는 마스킹 처리(연산에 미포함)
+	- 가려주고자 하는 요소에 매우 큰 음수 더해줌
+	- 소프트 맥스 적용시 0
+
+Encoder-Decoder Attention
+- 번역할 문장과 번역된 문장과의 관계
+- 쿼리 : 디코더 블록의 Masked Self-Attention의 출력 벡터
+- 키, 밸류 : 인코더 최상위 블록(6번째)의 사용값
