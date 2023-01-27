@@ -1,0 +1,51 @@
+분할(Segmentation)
+- 하나의 이미지에서 다른 객체를 구분하는 작업
+- 픽셀마다 클래스 분류
+- 레이블링된 데이터 필요
+
+의미적 분할(Semantic Segmentation)
+- 같은 클래스의 객체에 대해서 같은 라벨링을 하는 분할
+
+(Semantic) Instance Segmentation
+- 같은 클래스라도 다른 객체에 다른 라벨링을 하는 분할
+
+--------------------------------------------------------------------------------------
+
+
+Segmentation model
+
+FCN
+- 완전 연결층부분을 합성곱 층으로 대체
+- 줄어든 이미지를 키워주는 upsampling(Transpose Convolution) 진행
+    - 입력 크기와 동일하게 출력
+- Transpose convolution
+    - 각 픽셀에 필터를 곱하여 stride
+    - 많은 정보 손실
+- 이전에 사용했던 풀링층을 Up sampling하여 사용
+
+U-net 
+- Down sampling, Up smapling 두 부분으로 진행
+- Up sampling시 Down sampling에서 나왔던 feature map을 붙여 추가 데이터로 사용
+- 패딩 처리 x
+    - 미러링
+    - 바이오 메디컬 분야
+
+--------------------------------------------------------------------------------------
+
+
+객체 탐지(Object Detection)/인식(Recognition)
+- 이미지에서 레이블에 맞는 객체를 찾는 작업
+
+IoU
+- 객체 탐지의 평가 지표
+- 실제 영역 ∩ 예측 영역 / 실제 영역 ∪ 예측 영역
+
+2-Stage Detector
+- 객체가 있을만한 곳(RoI, Region of Interest)을 추천받은 지역에 분류 수행
+- 느리지만 정확
+- R-CNN 계열
+
+1- Stage Detector
+- grid등의 작은 공간으로 자른 뒤 해당 공간을 탐색하며 분류
+- 빠르지만 부정확
+- YOLO 계열
