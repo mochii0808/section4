@@ -46,7 +46,7 @@ iteration │ 2. 결과 출력
 
 4-3) Mini-Batch
 - 여러 데이터(배치)에 대해 기울기 계산 후 평균 후 갱신
-- epoch > iteration
+- epoch < iteration
 
 4-4) 배치
 - SGD : 1개로
